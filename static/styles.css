@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+body {
+    background: #a7ff9f;
+    font-family: 'Lato', sans-serif;
+    color: #dddddd;
+}
+
+#contents {
+    width: 70%;
+    background: #bfceff;
+    background-image: url('images/clear sky.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    text-align: center;
+
+    border-radius: 20px;
+    margin: 140px auto;
+}
+
+#results {
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    border-radius: 20px;
+    height: 500px;
+    display: flex;
+}
+
+#left {
+    width: 60%;
+    margin-top: 30px;
+}
+
+#right {
+    background: rgba(0, 0, 0, 0.8);
+    width: 40%;
+    border-radius: 0 20px 20px 0;
+    padding-top: 80px;
+}
+
+#temp {
+    font-size: 80px;
+    font-weight: 600;
+}
+
+h2 {
+    font-size: 40px;
+    display: inline-block;
+}
+
+#logo-weather {
+    display: inline-block;
+}
+
+#logo-weather img {
+    width: 60px;
+}
+
+figcaption {
+    font-size: 20px;
+}
+
+.weather-data-item {
+    font-size: 18px;
+    text-align: left;
+    margin-left: 20px;
+}
+
+.weather-data-value {
+    float: right;
+    margin-right: 20px;
+}
+
+hr {
+    border: 1px solid #474747;
+    width: 80%;
+}
+
+label,
+input {
+    font-size: 16px;
+}
+
+/* use font shadow */
+#temp,
+h2,
+figcaption {
+    text-shadow: 3px 3px 2px #000;
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App and Image Gallery</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="closet.css">
+</head>
+
+<body>
+    <div id="contents">
+        <div id="results">
+            <h3>Image Gallery</h3>
+            <div class="gallery">
+                {% for image, info in data.items() %}
+                <div class="gallery-item">
+                    <img class="image"
+                        src="https://media.istockphoto.com/id/175397603/photo/frog.jpg?s=612x612&w=0&k=20&c=EMXlwg5SicJllr7gnSFUUjzwCGa1ciLjYD1bk8NvO2E="
+                        alt="{{ info }}">
+                    <p>{{ info[1] }} {{ info[0] }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            <div id="right">
+                <br>
+                <h2>Toronto Weather</h2>
+                <hr>
+                <p id="temp">{{ toronto_weather.main.temp|round(1) }}°</p>
+                <figure id="logo-weather">
+                    <figcaption>{{ toronto_weather.weather[0].description }}</figcaption>
+                </figure>
+            </div>
+            <div id="left">
+                <p class="weather-data-item">Temperature feeling: <span class="weather-data-value">{{
+                        toronto_weather.main.feels_like|round(1) }} °C</span></p>
+                <p class="weather-data-item">Pressure: <span class="weather-data-value">{{ toronto_weather.main.pressure
+                        }} hPa</span></p>
+                <p class="weather-data-item">Humidity: <span class="weather-data-value">{{ toronto_weather.main.humidity
+                        }}%</span></p>
+                <p class="weather-data-item">Wind: <span class="weather-data-value">{{ toronto_weather.wind.speed }}
+                        Km/h</span></p>
+                <hr>
+            </div>
+
+        </div>
+        <!-- Add the "Done" button -->
+        <!-- <button id="generateButton">Generate</button> -->
+        <a href="{{ url_for('qlouni', temperature=toronto_weather.main.temp, wind=toronto_weather.wind.speed, precipitation=toronto_weather.main.humidity) }}"
+            class="btn btn-primary" id="generateButton">Generate</a>
+    </div>
+    <script>
+        // Handle the "Done" button click
+        // Handle the "Done" button click
+        generateButton.addEventListener("click", () => {
+            // Redirect to the mycloset.html page with the data
+            window.location.href = "/qlouni";
+        });
+    </script>
+</body>
+
+</html>

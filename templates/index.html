@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body>
+    <div id="contents">
+        {% if data and data["cod"] == 200 %}
+        {% set bgimage = data.weather[0].description %}
+        {% else %}
+        {% set bgimage = 'clear sky' %}
+        {% endif %}
+
+        <div id="results" style="background-image: 'thunderstorm.jpg'">
+
+            <div id="left">
+                {% if data%}
+                {% if data["cod"] == 200 %}
+                <p id="temp">{{ data.main.temp|round(1) }}°</p>
+                <h2>{{ city|title }}</h2>
+                <figure id="logo-weather">
+                    <img src="http://openweathermap.org/img/wn/{{ data.weather[0].icon }}@2x.png" alt="weather icon">
+                    <figcaption>{{ data.weather[0].description }}</figcaption>
+                </figure>
+                {% else %}
+                <h3>Your search <em>{{ city|title }}</em> gave a {{ data["cod"] }} code.</h3><br>
+                <h3>Please try again</h3>
+                {% endif %}
+                {% else %}
+                <h2>Use the search box to find a city</h2>
+                {% endif %}
+
+            </div>
+
+            <div id="right">
+                <h1>Weather App !</h1>
+
+                <form method="post" action="{{ url_for('get_weather') }}">
+                    <label for="city">City</label>
+                    <input name="city" type="text" value="{{ request.form['city'] }}">
+
+                    <button type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+
+                </form>
+
+                {% if data %}
+                {% if data["cod"] == 200 %}
+                <br>
+                <h3>Weather Details:</h3>
+                <hr>
+                <p class="weather-data-item">Temperature feeling: <span class="weather-data-value">{{
+                        data.main.feels_like|round(1) }} °C</span></p>
+                <p class="weather-data-item">Pressure: <span class="weather-data-value">{{ data.main.pressure }}
+                        hPa</span></p>
+                <p class="weather-data-item">Humidity: <span class="weather-data-value">{{ data.main.humidity }}
+                        %</span></p>
+                <p class="weather-data-item">Wind: <span class="weather-data-value">{{ data.wind.speed }} Km/h</span>
+                </p>
+                <hr>
+                {% else %}
+                <p></p>
+                {% endif %}
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+    </div>
+</body>
+
+</html>

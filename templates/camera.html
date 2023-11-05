@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Webcam Feed</title>
+    <link rel="stylesheet" href="camera.css">
+</head>
+
+<body>
+    <h1>Webcam Feed</h1>
+    <video id="webcam" autoplay></video>
+    <button id="captureButton">Capture Image</button>
+
+    <div id="imageList">
+        <!-- Captured images and descriptions will be displayed here -->
+    </div>
+
+    <!-- Add the "Done" button -->
+    <button id="doneButton">Done</button>
+
+    <script>
+        const video = document.getElementById("webcam");
+        const captureButton = document.getElementById("captureButton");
+        const doneButton = document.getElementById("doneButton");
+        const imageList = document.getElementById("imageList");
+        const images = [];
+
+        // Access the user's camera and display the feed
+        navigator.mediaDevices.getUserMedia({video: true})
+            .then((stream) => {
+                video.srcObject = stream;
+            })
+            .catch((error) => {
+                console.error("Error accessing the webcam:", error);
+            });
+
+        // Function to update the list of captured images and descriptions
+        function updateImageList() {
+            imageList.innerHTML = "";
+
+            images.forEach((imageData, index) => {
+                const imageElement = document.createElement("img");
+                imageElement.src = imageData.url;
+                imageElement.alt = `Captured Image ${index + 1}`;
+                imageList.appendChild(imageElement);
+
+                if (imageData.description) {
+                    // Create a paragraph element for the description
+                    const descriptionElement = document.createElement("p");
+                    descriptionElement.textContent = imageData.description;
+
+                    // Append the description element to the image list
+                    imageList.appendChild(descriptionElement);
+                }
+            });
+        }
+
+        // Capture and display the image when the "Capture Image" button is clicked
+        captureButton.addEventListener("click", () => {
+            const canvas = document.createElement("canvas");
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+            const imageDataUrl = canvas.toDataURL("image/jpeg");
+
+            // Add the captured image to the list
+            images.push({url: imageDataUrl, description: null});
+
+            // Update the list with descriptions (via API call)
+            fetch("/classify_image", {
+                method: "POST",
+                body: JSON.stringify({image: imageDataUrl}),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    // Update the description for the captured image
+                    images[images.length - 1].description = data.description[0] + data.description[1];
+
+                    // Display the updated list of captured images and descriptions
+                    updateImageList();
+                })
+                .catch((error) => {
+                    console.error("Error classifying image:", error);
+                });
+        });
+
+        // Handle the "Done" button click
+        // Handle the "Done" button click
+        doneButton.addEventListener("click", () => {
+            // Redirect to the mycloset.html page with the data
+            window.location.href = "/mycloset";
+        });
+
+
+
+        // Listen for the window reload event
+        window.addEventListener("beforeunload", () => {
+            // Send a request to the server to delete the folder
+            fetch("/delete_captured_images")
+                .then(() => {
+                    console.log("Captured images folder deleted.");
+                })
+                .catch((error) => {
+                    console.error("Error deleting captured images folder:", error);
+                });
+        });
+    </script>
+</body>
+
+</html>
