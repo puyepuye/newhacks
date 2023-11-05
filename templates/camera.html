@@ -3,7 +3,7 @@
 
 <head>
     <title>Webcam Feed</title>
-    <link rel="stylesheet" href="camera.css">
+    <link rel="stylesheet" href="static/camera.css">
 </head>
 
 <body>
@@ -11,9 +11,13 @@
     <video id="webcam" autoplay></video>
     <button id="captureButton">Capture Image</button>
 
-    <div id="imageList">
+    <div id="imageList" class="carousel">
         <!-- Captured images and descriptions will be displayed here -->
+        <div class="carousel-inner">
+            <!-- Images and descriptions go here -->
+        </div>
     </div>
+
 
     <!-- Add the "Done" button -->
     <button id="doneButton">Done</button>

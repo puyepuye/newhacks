@@ -1,0 +1,87 @@
+/* Style the body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+/* Style the heading */
+h1 {
+    color: #333;
+    margin-top: 20px;
+}
+
+/* Style the video element */
+video {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    border: 1px solid #333;
+    border-radius: 22px;
+}
+
+/* Style the "Capture Image" button */
+#captureButton {
+    background-color: #0074D9;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 22px;
+}
+
+/* Style the "Done" button */
+#doneButton {
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 22px;
+}
+/* Style the carousel container */
+.carousel {
+    overflow: hidden;
+    width: 100%;
+    padding: 10px;
+}
+
+/* Style the inner container for the carousel items */
+.carousel-inner {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 10px;
+}
+
+/* Style the individual carousel items (images and descriptions) */
+.carousel-item {
+    flex: 0 0 auto;
+    width: 100px; /* Set the width of each item as needed */
+    margin-right: 10px;
+    scroll-snap-align: start;
+}
+
+/* Style the image inside each carousel item */
+.carousel-item img {
+    max-width: 100%;
+    height: auto;
+    border: 20px solid #333;
+    display: block;
+    border-radius: 22px;
+}
+
+/* Style the description below each image */
+.carousel-item p {
+    text-align: center;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+/* Add additional styling as needed */
